@@ -1,0 +1,9 @@
+{
+  "name": "angular-w-schema",
+  "description": "Trying out angular w schema",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-schema-form": "^0.8.13",
+    "angular-schema-form-bootstrap": "^0.2.0"
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="page-header">
+                <h1>Here's a form built from a schema:</h1>
+            </div>
+            <div ng-app="testApp" ng-controller="FormController">
+                <form sf-schema="schema" sf-form="form" sf-model="model" name="schemaForm" ng-submit="onSubmit(schemaForm)">
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="jquery-2.2.5.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+<script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+<script type="text/javascript">
+    var schemaApp = angular.module('testApp', ['schemaForm']);
+
+    schemaApp.controller('FormController', function ($scope) {
+
+        var personSchema = {
+            "title": "Person Schema",
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "age": {
+                    "description": "Age in years",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "required": ["firstName", "lastName"]
+        };
+        var easySchema = {
+            type: "object",
+            properties: {
+                name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
+                title: {
+                    type: "string",
+                    enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
+                }
+            }
+        };
+
+        $scope.schema = personSchema;
+
+        $scope.form = [
+            "*",
+            {
+                type: "submit",
+                title: "Save"
+            }
+        ];
+
+        $scope.model = {};
+
+        $scope.onSubmit = function(form) {
+            // First we broadcast an event so all fields validate themselves
+            $scope.$broadcast('schemaFormValidate');
+
+            // Then we check if the form is valid
+            if (form.$valid) {
+                // ... do whatever you need to do with your data.
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
