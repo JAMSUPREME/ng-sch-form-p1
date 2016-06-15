@@ -1,0 +1,11 @@
+{
+  "/people": {
+    "schema": "people",
+    "verbs": ["GET", "POST"],
+    "friendlyName": "People"
+  },
+  "/contestants": {
+    "schema": "contestant",
+    "verbs": ["POST"]
+  }
+}

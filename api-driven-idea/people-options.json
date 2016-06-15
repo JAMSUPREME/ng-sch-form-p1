@@ -1,0 +1,15 @@
+{
+  "/{id}": {
+    "schema": "person",
+    "verbs": ["GET", "PATCH", "DELETE"],
+    "friendlyName": "Person",
+    "/pets": {
+      "schema": "pets",
+      "verbs": ["GET", "POST", "PUT", "DELETE"],
+      "friendlyName": "Pets"
+    }
+  },
+  "schema": "people",
+  "verbs": ["GET", "POST"],
+  "friendlyName": "People"
+}

@@ -1,0 +1,35 @@
+
+External API
+  Menu
+  Personal Info
+    You (includes family and friends)
+    Your pets
+  Contestants (for something)
+
+all-about-you.org
+/
+  get: menu
+/people
+  /{id}
+  /pets (json schema can point to URI for retrieving pet type)
+/contestants (let's assume people that want this can win a prize)
+
+
+Internal API
+  *would also handle tokens, auth, mappings, etc.
+  Profile (just user info)
+    Also dupes data to /contestants?
+  Pets (pets for a user) - subset of /people/{id} of API endpoint
+
+
+--
+-- Step 1 - A front end to an API (for now rolling a custom thing)
+--
+- Build generic front end that gets the root, builds nav (assume it's a form), then exposes CRUD on the resource
+
+
+--
+-- Food for thought
+--
+- Specs that can assist in accomplishing this: Swagger, RAML, JSON-Home
+- Getting higher level: http://martinfowler.com/articles/richardsonMaturityModel.html
