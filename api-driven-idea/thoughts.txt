@@ -4,22 +4,26 @@ External API
   Personal Info
     You (includes family and friends)
     Your pets
-  Contestants (for something)
 
 all-about-you.org
 /
   get: menu
 /people
   /{id}
-  /pets (json schema can point to URI for retrieving pet type)
-/contestants (let's assume people that want this can win a prize)
+
+
+finances.org (assume some HR system)
+/
+    get: menu
+/people
+    salary
 
 
 Internal API
   *would also handle tokens, auth, mappings, etc.
   Profile (just user info)
-    Also dupes data to /contestants?
-  Pets (pets for a user) - subset of /people/{id} of API endpoint
+    Also dupes data to finances api?
+  family info split into separate page on our UI for people
 
 
 --
