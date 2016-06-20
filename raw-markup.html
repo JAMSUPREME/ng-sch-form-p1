@@ -1,0 +1,225 @@
+<html lang="en">
+<head>
+    <style type="text/css">@charset "UTF-8";
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+        display: none !important;
+    }
+
+    ng\:form {
+        display: block;
+    }
+
+    .ng-animate-shim {
+        visibility: hidden;
+    }
+
+    .ng-anchor {
+        position: absolute;
+    }</style>
+    <meta charset="UTF-8">
+    <title>Cool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="page-header">
+                <h1>Here's a form built from a schema:</h1>
+            </div>
+            <div ng-app="testApp" ng-controller="FormController" class="ng-scope">
+                <form sf-schema="schema" sf-form="form" sf-model="model" name="schemaForm"
+                      ng-submit="onSubmit(schemaForm)"
+                      class="ng-isolate-scope ng-dirty ng-valid-parse ng-valid-number ng-submitted ng-invalid ng-invalid-tv4-302 ng-invalid-schema-form">
+
+                    <bootstrap-decorator form="schemaForm.form[0]" class="ng-scope">
+                        <div class="form-group schema-form-text  has-feedback has-error"
+                             ng-class="{'has-error': form.disableErrorState !== true &amp;&amp; hasError(), 'has-success': form.disableSuccessState !== true &amp;&amp; hasSuccess(), 'has-feedback': form.feedback !== false }">
+                            <label class="control-label " ng-class="{'sr-only': !showTitle()}" for="name">name</label>
+                            <!-- ngIf: !form.fieldAddonLeft && !form.fieldAddonRight --><input
+                                ng-if="!form.fieldAddonLeft &amp;&amp; !form.fieldAddonRight" ng-show="form.key"
+                                type="text" step="any" sf-changed="form" placeholder=""
+                                class="form-control  ng-dirty ng-valid-parse ng-touched ng-empty ng-invalid ng-invalid-tv4-302 ng-invalid-schema-form"
+                                id="name" ng-model-options="form.ngModelOptions" ng-model="model['name']"
+                                ng-disabled="form.readonly" schema-validate="form" name="name"
+                                aria-describedby="nameStatus">
+                            <!-- end ngIf: !form.fieldAddonLeft && !form.fieldAddonRight -->
+                            <!-- ngIf: form.fieldAddonLeft || form.fieldAddonRight -->
+                            <!-- ngIf: form.feedback !== false --><span ng-if="form.feedback !== false"
+                                                                        class="form-control-feedback ng-scope glyphicon glyphicon-remove"
+                                                                        ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"
+                                                                        aria-hidden="true"></span>
+                            <!-- end ngIf: form.feedback !== false --> <!-- ngIf: hasError() || hasSuccess() --><span
+                                ng-if="hasError() || hasSuccess()" id="nameStatus" class="sr-only ng-binding ng-scope">(error)</span>
+                            <!-- end ngIf: hasError() || hasSuccess() -->
+                            <div class="help-block" sf-message="form.description">Required</div>
+                        </div>
+                    </bootstrap-decorator>
+                    <bootstrap-decorator form="schemaForm.form[1]" class="ng-scope">
+                        <div class="form-group schema-form-number  has-feedback has-success"
+                             ng-class="{'has-error': form.disableErrorState !== true &amp;&amp; hasError(), 'has-success': form.disableSuccessState !== true &amp;&amp; hasSuccess(), 'has-feedback': form.feedback !== false }">
+                            <label class="control-label " ng-class="{'sr-only': !showTitle()}" for="credit_card">credit_card</label>
+                            <!-- ngIf: !form.fieldAddonLeft && !form.fieldAddonRight --><input
+                                ng-if="!form.fieldAddonLeft &amp;&amp; !form.fieldAddonRight" ng-show="form.key"
+                                type="number" step="any" sf-changed="form" placeholder=""
+                                class="form-control  ng-valid-schema-form ng-not-empty ng-dirty ng-valid-number ng-touched"
+                                id="credit_card" ng-model-options="form.ngModelOptions" ng-model="model['credit_card']"
+                                ng-disabled="form.readonly" schema-validate="form" name="credit_card"
+                                aria-describedby="credit_cardStatus">
+                            <!-- end ngIf: !form.fieldAddonLeft && !form.fieldAddonRight -->
+                            <!-- ngIf: form.fieldAddonLeft || form.fieldAddonRight -->
+                            <!-- ngIf: form.feedback !== false --><span ng-if="form.feedback !== false"
+                                                                        class="form-control-feedback ng-scope glyphicon glyphicon-ok"
+                                                                        ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"
+                                                                        aria-hidden="true"></span>
+                            <!-- end ngIf: form.feedback !== false --> <!-- ngIf: hasError() || hasSuccess() --><span
+                                ng-if="hasError() || hasSuccess()" id="credit_cardStatus"
+                                class="sr-only ng-binding ng-scope">(success)</span>
+                            <!-- end ngIf: hasError() || hasSuccess() -->
+                            <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                    </bootstrap-decorator>
+                    <bootstrap-decorator form="schemaForm.form[2]" class="ng-scope">
+                        <!-- ngIf: evalExpr(form.condition,{ model: model, "arrayIndex": arrayIndex, "modelValue": model['billing_address']}) -->
+                        <div class="form-group schema-form-text  has-feedback has-success"
+                             ng-class="{'has-error': form.disableErrorState !== true &amp;&amp; hasError(), 'has-success': form.disableSuccessState !== true &amp;&amp; hasSuccess(), 'has-feedback': form.feedback !== false }"
+                             ng-if="evalExpr(form.condition,{ model: model, &quot;arrayIndex&quot;: arrayIndex, &quot;modelValue&quot;: model['billing_address']})">
+                            <label class="control-label " ng-class="{'sr-only': !showTitle()}" for="billing_address">billing_address</label>
+                            <!-- ngIf: !form.fieldAddonLeft && !form.fieldAddonRight --><input
+                                ng-if="!form.fieldAddonLeft &amp;&amp; !form.fieldAddonRight" ng-show="form.key"
+                                type="text" step="any" sf-changed="form" placeholder=""
+                                class="form-control  ng-empty ng-valid-schema-form ng-dirty" id="billing_address"
+                                ng-model-options="form.ngModelOptions" ng-model="model['billing_address']"
+                                ng-disabled="form.readonly" schema-validate="form" name="billing_address"
+                                aria-describedby="billing_addressStatus">
+                            <!-- end ngIf: !form.fieldAddonLeft && !form.fieldAddonRight -->
+                            <!-- ngIf: form.fieldAddonLeft || form.fieldAddonRight -->
+                            <!-- ngIf: form.feedback !== false --><span ng-if="form.feedback !== false"
+                                                                        class="form-control-feedback ng-scope glyphicon glyphicon-ok"
+                                                                        ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"
+                                                                        aria-hidden="true"></span>
+                            <!-- end ngIf: form.feedback !== false --> <!-- ngIf: hasError() || hasSuccess() --><span
+                                ng-if="hasError() || hasSuccess()" id="billing_addressStatus"
+                                class="sr-only ng-binding ng-scope">(success)</span>
+                            <!-- end ngIf: hasError() || hasSuccess() -->
+                            <div class="help-block" sf-message="form.description"></div>
+                        </div>
+                        <!-- end ngIf: evalExpr(form.condition,{ model: model, "arrayIndex": arrayIndex, "modelValue": model['billing_address']}) -->
+                    </bootstrap-decorator>
+                    <bootstrap-decorator form="schemaForm.form[3]" class="ng-scope">
+                        <div class="form-group schema-form-submit "><!-- ngIf: form.type === 'submit' --><input
+                                type="submit" class="btn btn-primary " value="Save" ng-disabled="form.readonly"
+                                ng-if="form.type === 'submit'"><!-- end ngIf: form.type === 'submit' -->
+                            <!-- ngIf: form.type !== 'submit' --></div>
+                    </bootstrap-decorator>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="jquery-2.2.5.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+<script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+<script type="text/javascript">
+    var schemaApp = angular.module('testApp', ['schemaForm']);
+
+    schemaApp.controller('FormController', function ($scope) {
+
+        var personSchema = {
+            "title": "Person Schema",
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "age": {
+                    "description": "Age in years",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "required": ["firstName", "lastName"]
+        };
+        var easySchema = {
+            type: "object",
+            properties: {
+                name: {type: "string", minLength: 2, title: "Name", description: "Name or alias"},
+                title: {
+                    type: "string",
+                    enum: ['dr', 'jr', 'sir', 'mrs', 'mr', 'NaN', 'dj']
+                }
+            }
+        };
+        var ccSchema = {
+            "type": "object",
+
+            "properties": {
+                "name": {"type": "string"},
+                "credit_card": {"type": "number"},
+                "billing_address": {"type": "string"}
+            },
+
+            "required": ["name"],
+
+            "dependencies": {
+                "credit_card": ["billing_address"]
+            }
+        };
+
+        $scope.schema = ccSchema;
+
+//        $scope.form = [
+//            "*",
+//            {
+//                type: "submit",
+//                title: "Save"
+//            }
+//        ];
+
+// force prop dependency
+        $scope.form = [
+            "name",
+            "credit_card",
+            {
+                "key": "billing_address",
+                "condition": "model.credit_card" //or "model.eligible"
+            },
+            {
+                type: "submit",
+                title: "Save"
+            }
+        ];
+
+
+        $scope.model = {};
+
+        $scope.onSubmit = function (form) {
+            // First we broadcast an event so all fields validate themselves
+            $scope.$broadcast('schemaFormValidate');
+
+            // Then we check if the form is valid
+            if (form.$valid) {
+                // ... do whatever you need to do with your data.
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>

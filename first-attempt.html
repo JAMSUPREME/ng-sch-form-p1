@@ -17,7 +17,8 @@
                 <h1>Here's a form built from a schema:</h1>
             </div>
             <div ng-app="testApp" ng-controller="FormController">
-                <form sf-schema="schema" sf-form="form" sf-model="model" name="schemaForm" ng-submit="onSubmit(schemaForm)">
+                <form sf-schema="schema" sf-form="form" sf-model="model" name="schemaForm"
+                      ng-submit="onSubmit(schemaForm)">
 
                 </form>
             </div>
@@ -68,20 +69,51 @@
                 }
             }
         };
+        var ccSchema = {
+            "type": "object",
 
-        $scope.schema = personSchema;
+            "properties": {
+                "name": {"type": "string"},
+                "credit_card": {"type": "number"},
+                "billing_address": {"type": "string"}
+            },
 
+            "required": ["name"],
+
+            "dependencies": {
+                "credit_card": ["billing_address"]
+            }
+        };
+
+        $scope.schema = ccSchema;
+
+        // explicitly define the fields
+        // only doing this to explicitly add the validation implied with "dependencies" in the JSON above (which is not supported by the angular-json-schema lib)
         $scope.form = [
-            "*",
+            "name",
+            "credit_card",
+            {
+                "key": "billing_address",
+                "condition": "model.credit_card", //or "model.eligible"
+                validationMessage: {
+                    'reqBill': 'If CC, need addr'
+                },
+                ngModel: function (ngModel) {
+                    ngModel.$validators.reqBill = function (value) {
+                        return !!value; //if truthy, it is OK
+                    };
+                }
+            },
             {
                 type: "submit",
                 title: "Save"
             }
         ];
 
+
         $scope.model = {};
 
-        $scope.onSubmit = function(form) {
+        $scope.onSubmit = function (form) {
             // First we broadcast an event so all fields validate themselves
             $scope.$broadcast('schemaFormValidate');
 
