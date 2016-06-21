@@ -41,6 +41,21 @@
 
     schemaApp.controller('FormController', function ($scope) {
 
+        var petSchema = {
+            "title": "Pet Schema",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "age": {
+                    "description": "Age in years",
+                    "type": "integer",
+                    "minimum": 1
+                }
+            },
+            "required": ["name"]
+        };
         var personSchema = {
             "title": "Person Schema",
             "type": "object",
@@ -55,9 +70,13 @@
                     "description": "Age in years",
                     "type": "integer",
                     "minimum": 0
-                }
+                },
+                // NOTE: we'll assume $ref gets expanded into the pet schema for didactic purposes (a framework would somehow do this for us)
+                // "Proper" syntax would be "pet": { "$ref": "file.json#/" }
+                // Good ref: https://spacetelescope.github.io/understanding-json-schema/index.html
+                "pet": petSchema
             },
-            "required": ["firstName", "lastName"]
+            "required": ["firstName", "lastName", "pet"]
         };
         var easySchema = {
             type: "object",
@@ -85,30 +104,38 @@
             }
         };
 
-        $scope.schema = ccSchema;
-
-        // explicitly define the fields
-        // only doing this to explicitly add the validation implied with "dependencies" in the JSON above (which is not supported by the angular-json-schema lib)
+        $scope.schema = personSchema;
         $scope.form = [
-            "name",
-            "credit_card",
-            {
-                "key": "billing_address",
-                "condition": "model.credit_card", //or "model.eligible"
-                validationMessage: {
-                    'reqBill': 'If CC, need addr'
-                },
-                ngModel: function (ngModel) {
-                    ngModel.$validators.reqBill = function (value) {
-                        return !!value; //if truthy, it is OK
-                    };
-                }
-            },
+            "*",
             {
                 type: "submit",
                 title: "Save"
             }
         ];
+
+        // explicitly define the fields
+        // only doing this to explicitly add the validation implied with "dependencies" in the
+        // JSON above (which is not supported by the angular-json-schema lib)
+//        $scope.form = [
+//            "name",
+//            "credit_card",
+//            {
+//                "key": "billing_address",
+//                "condition": "model.credit_card",
+//                validationMessage: {
+//                    'reqBill': 'If CC, need addr'
+//                },
+//                ngModel: function (ngModel) {
+//                    ngModel.$validators.reqBill = function (value) {
+//                        return !!value; //if truthy, it is OK
+//                    };
+//                }
+//            },
+//            {
+//                type: "submit",
+//                title: "Save"
+//            }
+//        ];
 
 
         $scope.model = {};
