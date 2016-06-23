@@ -40,6 +40,9 @@
                         <th ng-repeat="personProp in peopleSchema">
                             {{personProp}}
                         </th>
+                        <th>
+                            Actions
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,16 +50,17 @@
                         <td ng-repeat="personProp in peopleSchema">
                             {{person[personProp]}}
                         </td>
+                        <td>
+                            <span ng-repeat-start="action in allowedActions">
+                                <a href="#">{{action}}</a>
+                            </span>
+                            <span ng-repeat-end ng-if="!$last">
+                                |
+                            </span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
-
-                <div>
-                    First person:
-                    <div>
-                        {{garbage}}
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -69,6 +73,31 @@
 <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 <script type="text/javascript">
     var peopleApp = angular.module('peopleApp', []);
+    function methodsToActions(allowHeaders) {
+        var actions = [];
+        for (var i = 0; i < allowHeaders.length; i++) {
+            var httpMethod = allowHeaders[i];
+            switch (httpMethod) {
+                case "GET":
+                    actions.push('View');
+                    break;
+//                POST will go top-level
+//                case "POST":
+//                    actions.push('New');
+//                    break;
+                case "PUT":
+                case "PATCH":
+                    if (actions.indexOf('Update') === -1) {
+                        actions.push('Update'); // put/patch are both synonymous with update
+                    }
+                    break;
+                case "DELETE":
+                    actions.push('Delete');
+                    break;
+            }
+        }
+        return actions;
+    }
     peopleApp.controller('PeopleController', function ($scope, $http) {
         var currentRoute = '//localhost:3000/people';
 
@@ -78,7 +107,7 @@
         // but that would definitely require an internal API to manipulate a special schema (of primitives)
         $http.get(currentRoute + '/schema').then(function (response) {
             var props = response.data.properties;
-            var allowHeaders = response.headers("Allow");
+            var allowHeaders = response.headers("Allow").split(', '); // Get headers and split to give an array
             var filteredProps = [];
             for (var prop in props) {
                 if (prop.type !== 'object') {
@@ -86,7 +115,12 @@
                 }
             }
 
-            // TODO: Based on allowHeaders, we'll add stuff like "view", "edit", "delete"
+            // I'll have to add some sort of route mapping to this
+            // new - /create
+            // view - /show
+            // update - /update
+            // delete - modal?
+            $scope.allowedActions = methodsToActions(allowHeaders);
 
             $scope.peopleSchema = filteredProps;
         }, function (response) {
@@ -98,8 +132,6 @@
         }, function (response) {
             alert('failed!');
         });
-
-        $scope.garbage = {"title": "Garbage", "subtitle": "Sub garbage"};
     });
 </script>
 <script type="text/javascript">
