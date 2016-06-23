@@ -32,3 +32,20 @@ In their defense, there are some notable advantages in leveraging the HTTP spec 
 
 However, hypermedia (and HATEOAS, for example) do represent a significant shift in how evolvable clients can be designed.
 Definitely worth playing with to explore its potential.
+
+# Goals of this code
+
+To put the goals succinctly
+
+* Show a UI that can do the following:
+  * Dynamically create a navigation menu based on an API home doc
+  * Build a simple UI for showing all resources (based on its schema), and accordingly determining CRUD actions available
+  * Show how the UI immediately reflects modifications when the dependent API changes (e.g. new fields or new methods)
+  * Emphasize that the UI has *no* business logic. It is purely view behavior based on the metadata we get from the API.
+* Show when/why an "Internal API" comes into the picture
+  * In most cases, it can just pass through to the "real" API, but it can also serve as a handy way to transform or aggregate one or many APIs.
+  * Generally when authentication comes into the picture, you'll want one layer of indirection so the client isn't accidentally showing secrets, etc.
+  
+Secondary objectives (if I have time)
+
+* Show how HATEOAS makes things even more dynamic and can even differ when looking at the same resource
