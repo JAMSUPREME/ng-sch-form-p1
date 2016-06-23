@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cool</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <nav class="navbar navbar-default col-lg-6 col-lg-offset-3">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                            aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" id="nav-list">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="page-header">
+                <h1>For now loading nav</h1>
+            </div>
+            <div ng-app="peopleApp" ng-controller="PeopleController">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th ng-repeat="personProp in peopleSchema">
+                            {{personProp}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="person in people">
+                        <td ng-repeat="personProp in peopleSchema">
+                            {{person[personProp]}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    First person:
+                    <div>
+                        {{garbage}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="jquery-2.2.5.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+        integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript">
+    var peopleApp = angular.module('peopleApp', []);
+    peopleApp.controller('PeopleController', function ($scope, $http) {
+        var currentRoute = '//localhost:3000/people';
+
+        // get schema info for columns
+        // (not sure how we'll do nested complex props, though?)
+        // it might be OK to just take what the schema gives us,
+        // but that would definitely require an internal API to manipulate a special schema (of primitives)
+        $http.get(currentRoute + '/schema').then(function (response) {
+            var props = response.data.properties;
+            var allowHeaders = response.headers("Allow");
+            var filteredProps = [];
+            for (var prop in props) {
+                if (prop.type !== 'object') {
+                    filteredProps.push(prop);
+                }
+            }
+
+            // TODO: Based on allowHeaders, we'll add stuff like "view", "edit", "delete"
+
+            $scope.peopleSchema = filteredProps;
+        }, function (response) {
+            alert('failed!');
+        });
+
+        $http.get(currentRoute).then(function (response) {
+            $scope.people = response.data;
+        }, function (response) {
+            alert('failed!');
+        });
+
+        $scope.garbage = {"title": "Garbage", "subtitle": "Sub garbage"};
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        // this stuff will be in the shared layout
+        var apiRoot = '//localhost:3000/api';
+        $.get(apiRoot).done(function (data, textStatus, jqXHR) {
+            for (var i = 0; i < data.length; i++) {
+                $('#nav-list').append('<li><a href="#">' + data[i].friendlyName + '</a></li>');
+            }
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            alert('failed!')
+        });
+    });
+</script>
+</body>
+</html>
